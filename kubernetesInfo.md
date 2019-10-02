@@ -49,7 +49,7 @@ Show Kubernetes dashboard
 
 To connect to the Docker registry inside the Minikube VM:
 
-    eval $(minikube docker-env) 
+    eval $(minikube docker-env) # this should use the docker build environment from Kubernetes. But how do we use containers that are built locally? For now we'll push to Docker hub.
 
 
     cd src/myservice/docker
