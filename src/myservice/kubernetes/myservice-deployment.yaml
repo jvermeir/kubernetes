@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myservice-deployment
+  labels:
+    app: myservice
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myservice
+  template:
+    metadata:
+      labels:
+        app: myservice
+    spec:
+      containers:
+        - name: myservice
+          image: jvermeir/myservice:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082
