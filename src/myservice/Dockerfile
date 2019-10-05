@@ -5,10 +5,10 @@ RUN \
   useradd --home-dir /home/serv --create-home -U serv
 
 USER serv
-COPY target/myservice.jar /home/serv/myservice.jar
+COPY target/*.jar /home/serv/
 
 WORKDIR /home/serv
 
 EXPOSE 8080
 
-CMD java -Djava.security.egd=file:/dev/./urandom -jar /home/serv/myservice.jar
+CMD java -Djava.security.egd=file:/dev/./urandom -jar /home/serv/*.jar

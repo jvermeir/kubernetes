@@ -51,14 +51,19 @@ To connect to the Docker registry inside the Minikube VM:
 
     eval $(minikube docker-env) # this should use the docker build environment from Kubernetes. But how do we use containers that are built locally? For now we'll push to Docker hub.
 
-
-    cd src/myservice/docker
+    cd src/myservice
     mvn clean install
-    docker build . -f docker/Dockerfile -t jvermeir/myservice
+    docker build .  -t jvermeir/myservice
     docker push jvermeir/myservice
     docker run -p 8082:8082 myservice
     curl localhost:8082/counter
     
+or use Maven 
+
+    mvn clean package
+    mvn dockerfile:push
+    
+see  [https://blog.madadipouya.com/2019/07/14/how-to-use-spotify-docker-maven-plugin/][how-to-use-spotify-docker-maven-plugin]   
     
     kubectl create -f src/main/resources/myservice-deployment.yaml 
     kubectl expose deployment myservice-deployment --type=LoadBalancer --port=8082
@@ -66,3 +71,11 @@ To connect to the Docker registry inside the Minikube VM:
         # get the url from the browser and use for curls
     kubectl scale --replicas=3 -f src/main/resources/myservice-deployment.yaml
     
+## Docker stuff 
+    
+https://cloud.docker.com/u/jvermeir/repository/docker/jvermeir/myservice
+https://registry.hub.docker.com/v2/repositories/docker/jvermeir/shop-shop/tags    
+curl -u $USERNAME:$PASSWORD -X "DELETE" https://cloud.docker.com/v2/repositories/jvermeir/shop-shop/tags/v1/
+
+
+[how-to-use-spotify-docker-maven-plugin]: https://blog.madadipouya.com/2019/07/14/how-to-use-spotify-docker-maven-plugin/
