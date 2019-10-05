@@ -49,7 +49,9 @@ Show Kubernetes dashboard
 
 To connect to the Docker registry inside the Minikube VM:
 
-    eval $(minikube docker-env) # this should use the docker build environment from Kubernetes. But how do we use containers that are built locally? For now we'll push to Docker hub.
+    eval $(minikube docker-env) # this should use the docker build environment from Kubernetes. 
+
+But how do we use containers that are built locally? For now we'll push to Docker hub.
 
     cd src/myservice
     mvn clean install
@@ -63,7 +65,8 @@ or use Maven
     mvn clean package
     mvn dockerfile:push
     
-see  [https://blog.madadipouya.com/2019/07/14/how-to-use-spotify-docker-maven-plugin/][how-to-use-spotify-docker-maven-plugin]   
+see  [https://blog.madadipouya.com/2019/07/14/how-to-use-spotify-docker-maven-plugin/][how-to-use-spotify-docker-maven-plugin] 
+Don't forget to add a ~/.m2/settings.xml file as described in the blog.  
     
     kubectl create -f src/main/resources/myservice-deployment.yaml 
     kubectl expose deployment myservice-deployment --type=LoadBalancer --port=8082
@@ -73,9 +76,6 @@ see  [https://blog.madadipouya.com/2019/07/14/how-to-use-spotify-docker-maven-pl
     
 ## Docker stuff 
     
-https://cloud.docker.com/u/jvermeir/repository/docker/jvermeir/myservice
-https://registry.hub.docker.com/v2/repositories/docker/jvermeir/shop-shop/tags    
-curl -u $USERNAME:$PASSWORD -X "DELETE" https://cloud.docker.com/v2/repositories/jvermeir/shop-shop/tags/v1/
-
-
-[how-to-use-spotify-docker-maven-plugin]: https://blog.madadipouya.com/2019/07/14/how-to-use-spotify-docker-maven-plugin/
+    https://cloud.docker.com/u/jvermeir/repository/docker/jvermeir/myservice
+    https://registry.hub.docker.com/v2/repositories/docker/jvermeir/shop-shop/tags    
+    curl -u $USERNAME:$PASSWORD -X "DELETE" https://cloud.docker.com/v2/repositories/jvermeir/shop-shop/tags/v1/
