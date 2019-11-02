@@ -45,7 +45,7 @@ Show Kubernetes dashboard
     
     minikube dashboard
     
-## Build myservice
+## Build services
 
 To connect to the Docker registry inside the Minikube VM:
 
@@ -57,13 +57,18 @@ But how do we use containers that are built locally? For now we'll push to Docke
     mvn clean install
     docker build .  -t jvermeir/myservice
     docker push jvermeir/myservice
-    docker run -p 8082:8082 myservice
+    docker run -p 8082:8080 myservice
     curl localhost:8082/counter
     
 or use Maven 
 
     mvn clean package
     mvn dockerfile:push
+    
+Build and deploy all services: 
+
+    cd src
+    ./build.sh    
     
 see  [https://blog.madadipouya.com/2019/07/14/how-to-use-spotify-docker-maven-plugin/][how-to-use-spotify-docker-maven-plugin] 
 Don't forget to add a ~/.m2/settings.xml file as described in the blog.  
@@ -75,17 +80,22 @@ Don't forget to add a ~/.m2/settings.xml file as described in the blog.
     kubectl scale --replicas=3 -f src/main/resources/myservice-deployment.yaml
     
 ## Docker stuff 
-    
+
+show Docker repositories
+
+    https://cloud.docker.com/repository/list
+        
     https://cloud.docker.com/u/jvermeir/repository/docker/jvermeir/myservice
-    https://registry.hub.docker.com/v2/repositories/docker/jvermeir/shop-shop/tags    
-    curl -u $USERNAME:$PASSWORD -X "DELETE" https://cloud.docker.com/v2/repositories/jvermeir/shop-shop/tags/v1/
+    
+get rid off all junk in your local repository
+    
+    docker rmi -f `docker images -q`
 
 ## Add Nginx 
 
 see 
 
     https://www.mirantis.com/blog/multi-container-pods-and-container-communication-in-kubernetes/
-    
     
 ## Run A/B testing
 
