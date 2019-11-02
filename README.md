@@ -68,7 +68,7 @@ or use Maven
 see  [https://blog.madadipouya.com/2019/07/14/how-to-use-spotify-docker-maven-plugin/][how-to-use-spotify-docker-maven-plugin] 
 Don't forget to add a ~/.m2/settings.xml file as described in the blog.  
     
-    kubectl create -f src/main/resources/myservice-deployment.yaml 
+    kubectl create -f src/myservice/kubernetes/myservice-deployment.yaml 
     kubectl expose deployment myservice-deployment --type=LoadBalancer --port=8082
     minikube service myservice-deployment  # add /counter in the url bar
         # get the url from the browser and use for curls
@@ -79,3 +79,29 @@ Don't forget to add a ~/.m2/settings.xml file as described in the blog.
     https://cloud.docker.com/u/jvermeir/repository/docker/jvermeir/myservice
     https://registry.hub.docker.com/v2/repositories/docker/jvermeir/shop-shop/tags    
     curl -u $USERNAME:$PASSWORD -X "DELETE" https://cloud.docker.com/v2/repositories/jvermeir/shop-shop/tags/v1/
+
+## Add Nginx 
+
+see 
+
+    https://www.mirantis.com/blog/multi-container-pods-and-container-communication-in-kubernetes/
+    
+    
+## Run A/B testing
+
+- two versions of a service
+- X% of new user sessions gets version1, (100-X)% gets version2  
+
+idea: 
+- add a start-session container that creates a new session for a user by redirecting X% to a version1 url 
+- use nginx to route url1 to container1 and url2 to container2
+- run the same container twice but with different startup parameters. this would allow different configs, but
+not different versions as in A/B testing.
+
+TODO:
+1. nginx to do routing
+2. service container that offers two endpoints, intended to demonstrate how usage diagrams can be constructed automatically.
+3. container that redirects to one of two deployments of the service container: one runs the app with instrumentation, one without
+4. data collector container stores log information.
+
+  
